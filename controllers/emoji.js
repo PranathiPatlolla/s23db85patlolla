@@ -1,8 +1,19 @@
 var emoji = require('../models/emoji');
 // List of all emojis
-exports.emoji_list = function(req, res) {
-res.send('NOT IMPLEMENTED: emoji list');
+exports.emoji_list = async function(req, res) {
+//res.send('NOT IMPLEMENTED: emoji list');
+//List of all Costumes
+try{
+theemoji = await emoji.find();
+res.send(theemoji);
+}
+catch(err){
+res.status(500);
+res.send(`{"error": ${err}}`);
+}
 };
+
+
 // for a specific emoji.
 exports.emoji_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: emoji detail: ' + req.params.id);
