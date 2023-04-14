@@ -59,8 +59,28 @@ exports.emoji_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: emoji delete DELETE ' + req.params.id);
 };
 // Handle emoji update form on PUT.
-exports.emoji_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: emoji update PUT' + req.params.id);
+//exports.emoji_update_put = function(req, res) {
+//res.send('NOT IMPLEMENTED: emoji update PUT' + req.params.id);
+//};
+// Handle emoji update form on PUT.
+exports.emoji_update_put = async function(req, res) {
+ console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+ try {
+ let toUpdate = await emoji.findById( req.params.id)
+ // Do updates of properties
+ if(req.body.emoji_face)
+ toUpdate.emoji_face = req.body.emoji_face;
+ if(req.body.emoji_hand) toUpdate.emoji_hand = req.body.emoji_hand;
+ if(req.body.emoji_things) toUpdate.emoji_things = req.body.emoji_things;
+ let result = await toUpdate.save();
+ console.log("Sucess " + result)
+ res.send(result)
+ } catch (err) {
+ res.status(500)
+ res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+ }
 };
 
 // VIEWS
