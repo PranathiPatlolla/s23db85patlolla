@@ -2,7 +2,7 @@ var emoji = require('../models/emoji');
 // List of all emojis
 exports.emoji_list = async function(req, res) {
 //res.send('NOT IMPLEMENTED: emoji list');
-//List of all Costumes
+//List of all emojis
 try{
 theemoji = await emoji.find();
 res.send(theemoji);
@@ -15,20 +15,32 @@ res.send(`{"error": ${err}}`);
 
 
 // for a specific emoji.
-exports.emoji_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: emoji detail: ' + req.params.id);
+//exports.emoji_detail = function(req, res) {
+//res.send('NOT IMPLEMENTED: emoji detail: ' + req.params.id);
+//};
+// for a specific emoji.
+exports.emoji_detail = async function(req, res) {
+console.log("detail" + req.params.id)
+try {
+result = await emoji.findById( req.params.id)
+res.send(result)
+} catch (error) {
+res.status(500)
+res.send(`{"error": document for id ${req.params.id} not found`);
+}
 };
+
 // Handle emoji create on POST.
 
 //res.send('NOT IMPLEMENTED: emoji create POST');
-// Handle Costume create on POST.
+// Handle emoji create on POST.
 exports.emoji_create_post = async function(req, res) {
 console.log(req.body)
 let document = new emoji();
 // We are looking for a body, since POST does not have query parameters.
 // Even though bodies can be in many different formats, we will be picky
 // and require that it be a json object
-// {"costume_type":"goat", "cost":12, "size":"large"}
+// {"emoji_type":"goat", "cost":12, "size":"large"}
 document.emoji_face = req.body.emoji_face;
 document.emoji_hand = req.body.emoji_hand;
 document.emoji_things = req.body.emoji_things;
