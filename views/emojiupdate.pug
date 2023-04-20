@@ -1,0 +1,43 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to update
+  else
+    - let emojiid = toShow._id
+    - let emoji_face = toShow.emoji_face
+    - let emoji_hand = toShow.emoji_hand
+    - let emoji_things = toShow.emoji_things
+
+    div.row(class='mb-2')
+      div.mr-1 ID is
+      div #{emojiid}
+      - let actionid = "/resource/emoji/" + emojiid
+      form(id='emojiForm', action= actionid, method="PUT")
+        div.form-group
+          label.emojiAttr(for='emoji_face') emoji face
+          input#emoji_face(type='text', name='emoji_face', value= emoji_face )
+        div.form-group
+          label.emojiAttr(for='emoji_hand') emoji hand
+          input#emoji_hand(type='text', name='emoji_hand', value= emoji_hand )
+        div.form-group
+          label.emojiAttr(for='emoji_things') emoji things
+          input#emoji_things(type='number', name='emoji_things', value= emoji_things )
+        input(type="submit")
+      script.
+        document.forms['emojiForm'].addEventListener('submit', (event) => {
+          event.preventDefault();
+          // TODO do something here to show user that form is being submitted
+          fetch(event.target.action, {
+            method: 'PUT',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+          }).then((resp) => {
+            return resp.json(); // or resp.text() or whatever the server sends
+          }).then((body) => {
+            alert("Update succeeded");
+            // TODO handle body
+          }).catch((error) => {
+            // TODO handle error
+            alert("Update failed " + error );
+          });
+        });

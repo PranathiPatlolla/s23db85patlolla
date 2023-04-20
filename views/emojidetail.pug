@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delail
+  else
+    - let emojiid = toShow._id
+    - let emoji_face = toShow.emoji_face
+    - let emoji_hand = toShow.emoji_hand
+    - let emoji_things = toShow.emoji_things
+
+    div
+      div.row
+        div(class='emojiAttr mr-3') emoji ID is:
+        div #{emojiid}
+      div.row
+        div(class='emojiAttr mr-3') emoji face is:
+        div #{emoji_face}
+      div.row
+        div(class='emojiAttr mr-3') emoji hand is:
+        div #{emoji_hand}
+      div.row
+        div(class='emojiAttr mr-3') emoji things is:
+        div #{emoji_things}

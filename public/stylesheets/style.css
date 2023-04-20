@@ -6,3 +6,14 @@ body {
 a {
   color: #00B7FF;
 }
+.emojiAttr {
+  background-color: aquamarine;
+  width: 120px;
+ }
+ .emojiAttr {
+  background-color:darkgoldenrod;
+  width: 120px;
+ }
+ h1{
+  color:darkgreen;
+ }

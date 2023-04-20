@@ -1,0 +1,50 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let emojiid = toShow._id
+    - let emoji_face = toShow.emoji_face
+    - let emoji_handor = toShow.emoji_handor
+    - let emoji_things = toShow.emoji_things
+    - let actionid = "/resource/emoji/" + emojiid
+    script.
+      let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='emojiAttr mr-3') emoji ID is:
+        div #{emojiid}
+      div.row
+        div(class='emojiAttr mr-3') emoji face is:
+        div #{emoji_face}
+      div.row
+        div(class='emojiAttr mr-3') emoji handor is:
+        div #{emoji_handor}
+      div.row
+        div(class='emojiAttr mr-3') emoji things is:
+        div #{emoji_things}
+      button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+      function cancel() {
+        // Go back to the home page for the emoji collection
+        window.location.href='/emojis'
+      }
+    script.
+      function deleteOnid() {
+        console.log("starting delete")
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeded")
+          window.location.href='/emojis'
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed " + error )
+        });
+      }
