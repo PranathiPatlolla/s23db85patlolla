@@ -2,16 +2,18 @@ extends layout
 
 block content
   h1= title
-  - var emoji = results
+  - let items = results;
   div(class="container-fluid")
-  div(class="row")
-   each e,index  in emoji
-    div(class="col-sm-2" onclick =`buy(${index})`) 
-        p Emojiface: #{e.emoji_face}, 
-        p Emojihand: #{e.emoji_hand}, 
-        p Emojithings: #{e.emoji_things}
-    script.
-        function buy(v)
-        {
-            alert(`You Face expression of emoji ${v+1}`)
-        }
+    div(class="row")
+      each item,index in items
+        - let destination = `dispatch(\"/emoji/update?id=${item._id}\")`
+        div(class="col-sm-2" class="m-1")
+          h3 #{item.emoji_face}
+          p #{item.emoji_hand}
+          p #{item.emoji_things}
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
+  script.
+    function dispatch(path){
+      console.log(path);
+      window.location.href=path;
+    }
